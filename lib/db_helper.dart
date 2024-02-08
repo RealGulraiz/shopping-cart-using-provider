@@ -42,4 +42,13 @@ class DBHelper {
     return queryResult.map((e) => Cart.fromMap(e)).toList();
   }
 
+  Future<int> delete(int id)async{
+    var dbClient = await db;
+    return dbClient!.delete(
+      'cart',
+      where: 'id=?',
+      whereArgs: [id]
+    );
+  }
+
 }

@@ -20,9 +20,10 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Product Products'),
+        title: const Text('My Products'),
         centerTitle: true,
         actions: [
           badges.Badge(
@@ -57,9 +58,8 @@ class _CartScreenState extends State<CartScreen> {
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      const Image(
-                                        image: NetworkImage('https://pbs.twimg.com/profile_images/1717013664954499072/2dcJ0Unw_400x400.png'),
-                                        // image: NetworkImage(snapshot.data[index].image.toString()),
+                                      Image(
+                                        image: NetworkImage(snapshot.data![index].image.toString()),
                                         height: 100,
                                         width: 100,
                                       ),
@@ -69,39 +69,33 @@ class _CartScreenState extends State<CartScreen> {
                                           mainAxisAlignment: MainAxisAlignment.start,
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Text(snapshot.data![index].productName.toString(),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(snapshot.data![index].productName.toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                                InkWell(
+                                                  onTap: (){
+                                                    dbHelper!.delete(snapshot.data![index].id!);
+                                                    cart.removeCounter();
+                                                    cart.removeTotalPrice(double.parse(snapshot.data![index].productPrice.toString()));
+                                                  },
+                                                  child: Icon(Icons.delete),
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(height: 5,),
                                             Text("\$" + snapshot.data![index].productPrice.toString() + " per " + snapshot.data![index].unitTag.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                             ),
                                             const SizedBox(height: 5,),
-                                            InkWell(
-                                              onTap: (){
-
-                                              },
-                                              child: Align(
-                                                alignment: Alignment.centerRight,
-                                                child: Container(
-                                                  height: 35,
-                                                  width: 100,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.green,
-                                                    borderRadius: BorderRadius.circular(5),
-                                                  ),
-                                                  child: const Center(
-                                                    child: Text('Remove', style: TextStyle(color: Colors.white, ),),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
                                           ],
                                         ),
                                       ),
@@ -115,9 +109,42 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                   );
                 }else {
-                  return Text('');
+                  return const Text('');
                 }
               }),
+          Consumer<CartProvider>(builder: (context, value, child){
+            return Visibility(
+              visible: value.getTotalPrice().toStringAsFixed(2) == '0.00' ? false : true,
+              child: Column(
+                children: [
+                  ReusableWidget(title: 'Sub Total', value: r'$' + value.getTotalPrice().toStringAsFixed(2)),
+                ],
+              ),
+            );
+          }),
+
+        ],
+      ),
+    );
+  }
+}
+
+
+// Resuable Widget for SubTotal
+
+class ReusableWidget extends StatelessWidget {
+  final String title, value;
+  const ReusableWidget({required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(title, style: Theme.of(context).textTheme.titleMedium,),
+          Text(value, style: Theme.of(context).textTheme.titleSmall,),
         ],
       ),
     );

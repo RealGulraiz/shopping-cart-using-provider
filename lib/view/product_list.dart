@@ -22,13 +22,13 @@ class _ProductListScreenState extends State<ProductListScreen> {
   List<String> productUnit = ['KG', 'Dozen', 'KG', 'Dozen', 'KG', 'KG', 'KG'];
   List<int> productPrice = [10,20,30,40,50,60,70];
   List<String> productImage = [
-    'https://healthjade.com/wp-content/uploads/2017/10/apple-fruit.jpg',
+    'https://sadruddin.com/wp-content/uploads/2022/06/mango1.jpg',
     'https://d2b5e9fzla1xs8.cloudfront.net/media/images/products/2021/03/3007.jpg',
-    'https://d2b5e9fzla1xs8.cloudfront.net/media/images/products/2021/03/3007.jpg',
-    'https://d2b5e9fzla1xs8.cloudfront.net/media/images/products/2021/03/3007.jpg',
-    'https://d2b5e9fzla1xs8.cloudfront.net/media/images/products/2021/03/3007.jpg',
-    'https://d2b5e9fzla1xs8.cloudfront.net/media/images/products/2021/03/3007.jpg',
-    'https://d2b5e9fzla1xs8.cloudfront.net/media/images/products/2021/03/3007.jpg',
+    'https://pictures.grocerapps.com/original/grocerapp-grapes-tofi-633d1fa172f03.jpeg',
+    'https://product-images.metro.ca/images/hcd/h4d/8874222256158.jpg',
+    'https://img.freepik.com/free-vector/realistic-berries-composition-with-isolated-image-cherry-with-ripe-leaves-blank-background-vector-illustration_1284-66040.jpg?size=338&ext=jpg&ga=GA1.1.1448711260.1706832000&semt=sph',
+    'https://jugais.com/wp-content/uploads/2020/07/pessego-1.jpg',
+    'https://img.freepik.com/free-psd/mix-fruits-png-isolated-transparent-background_191095-9865.jpg?size=338&ext=jpg&ga=GA1.1.1448711260.1706745600&semt=ais',
   ];
 
   @override
@@ -145,9 +145,11 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   );
                 },
               ),
-          )
+          ),
         ],
       ),
     );
   }
 }
+
+
